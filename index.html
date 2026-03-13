@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nexus '26 | Farewell Invitation</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -17,12 +17,13 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Prevents any scrolling and fixing the "jumping" refresh issue */
+            overflow: hidden; 
             display: flex;
             justify-content: center;
-            /* CHANGED: flex-start pushes content to the top instead of the dead center */
-            align-items: flex-start; 
-            min-height: 100vh;
-            overflow-x: hidden; 
         }
 
         .container {
@@ -32,9 +33,10 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            /* ADDED: This margin creates a nice gap at the top of the phone screen */
-            margin-top: 40px; 
-            position: relative;
+            
+            /* Fixed positioning keeps the card locked in place */
+            position: fixed; 
+            top: 5vh; /* Sets card 5% from the top of the screen */
             z-index: 2;
         }
 
@@ -48,10 +50,8 @@
         }
 
         .action-area {
-            margin-top: 35px;
+            margin-top: 30px;
             text-align: center;
-            /* ADDED: Ensures enough space at the bottom for scrolling */
-            padding-bottom: 50px; 
         }
 
         button {
@@ -67,6 +67,7 @@
             letter-spacing: 2px;
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             text-transform: uppercase;
+            outline: none;
         }
 
         button:hover {
@@ -117,9 +118,11 @@
         const cheerAudio = document.getElementById('cheerSound');
 
         function handleAccept() {
+            // Sound play
             cheerAudio.currentTime = 0;
             cheerAudio.play();
 
+            // Single massive coordinated burst
             const count = 500; 
             const defaults = {
                 origin: { y: 0.8 },
@@ -136,6 +139,7 @@
                 });
             }
 
+            // Fire all at once
             fire(0.25, {
                 spread: 70,
                 startVelocity: 55,
@@ -159,6 +163,7 @@
                 colors: ['#2d2d2d', '#f4c2c2', '#ffffff', '#b08d57']
             });
 
+            // UI Reveal
             const btn = document.getElementById('acceptBtn');
             const msg = document.getElementById('thanksMsg');
             btn.style.display = 'none';
