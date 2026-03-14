@@ -1,181 +1,677 @@
 <!DOCTYPE html>
+
+
+
 <html lang="en">
+
+
+
 <head>
+
+
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
     <title>Nexus '26 | Farewell Invitation</title>
+
+
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+
+
     
+
+
+
     <style>
+
+
+
         :root {
+
+
+
             --bg: #fdfaf7; 
+
+
+
             --dark: #2d2d2d;
+
+
+
         }
+
+
+
+
+
+
 
         body {
+
+
+
             font-family: 'Inter', sans-serif;
+
+
+
             background-color: var(--bg);
+
+
+
             margin: 0;
+
+
+
             display: flex;
+
+
+
             justify-content: center;
+
+
+
+            /* CHANGED: flex-start pushes content to the top instead of the dead center */
+
+
+
             align-items: flex-start; 
+
+
+
             min-height: 100vh;
+
+
+
             overflow-x: hidden; 
+
+
+
         }
+
+
+
+
+
+
 
         .container {
+
+
+
             width: 90%;
+
+
+
             max-width: 420px; 
+
+
+
             display: flex;
+
+
+
             flex-direction: column;
+
+
+
             align-items: center;
+
+
+
             padding: 20px;
+
+
+
+            /* ADDED: This margin creates a nice gap at the top of the phone screen */
+
+
+
             margin-top: 40px; 
+
+
+
             position: relative;
+
+
+
             z-index: 2;
+
+
+
         }
+
+
+
+
+
+
 
         .invitation-pic {
+
+
+
             width: 100%;
+
+
+
             height: auto;
+
+
+
             display: block;
+
+
+
             border-radius: 4px;
+
+
+
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+
+
+
             animation: zoomEntrance 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+
+
+
         }
+
+
+
+
+
+
 
         .action-area {
+
+
+
             margin-top: 35px;
+
+
+
             text-align: center;
+
+
+
+            /* ADDED: Ensures enough space at the bottom for scrolling */
+
+
+
             padding-bottom: 50px; 
+
+
+
         }
 
-        /* --- UPDATED BUTTON STYLE FOR MOBILE FEEDBACK --- */
+
+
+
+
+
+
         button {
+
+
+
             background-color: transparent;
+
+
+
             color: var(--dark);
+
+
+
             border: 2px solid var(--dark);
+
+
+
             padding: 16px 40px;
+
+
+
             font-family: 'Fira Code', monospace; 
+
+
+
             font-size: 0.9rem;
+
+
+
             font-weight: 500;
+
+
+
             border-radius: 0px; 
+
+
+
             cursor: pointer;
+
+
+
             letter-spacing: 2px;
+
+
+
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+
+
             text-transform: uppercase;
-            outline: none;
-            /* Faster transition for snappier feel */
-            transition: all 0.2s ease; 
-            /* Prevents the ugly blue highlight box on tap */
-            -webkit-tap-highlight-color: transparent; 
+
+
+
         }
 
-        /* Desktop Hover State */
+
+
+
+
+
+
         button:hover {
+
+
+
             transform: translateY(-3px);
+
+
+
             background-color: var(--dark);
+
+
+
             color: #fff;
+
+
+
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+
+
+
         }
 
-        /* Mobile Click/Press Feedback */
-        button:active {
-            transform: scale(0.95); /* Button slightly shrinks when pressed */
-            background-color: var(--dark);
-            color: #fff;
-            transition: all 0.1s;
-        }
+
+
+
+
+
 
         #thanksMsg {
+
+
+
             opacity: 0;
+
+
+
             transform: translateY(15px);
+
+
+
             transition: all 0.6s ease;
+
+
+
             color: var(--dark);
+
+
+
         }
 
+
+
+
+
+
+
         #thanksMsg.reveal {
+
+
+
             opacity: 1;
+
+
+
             transform: translateY(0);
+
+
+
         }
+
+
+
+
+
+
 
         .hidden { display: none; }
 
+
+
+
+
+
+
         @keyframes zoomEntrance {
+
+
+
             from { opacity: 0; transform: scale(0.9) translateY(20px); }
+
+
+
             to { opacity: 1; transform: scale(1) translateY(0); }
+
+
+
         }
+
+
+
     </style>
+
+
+
 </head>
+
+
+
 <body>
+
+
+
+
+
+
 
     <audio id="cheerSound" src="cheers.mp3" preload="auto"></audio>
 
+
+
+
+
+
+
     <div class="container">
+
+
+
         <img src="pic.png" alt="Nexus '26 Invitation" class="invitation-pic">
 
+
+
+
+
+
+
         <div class="action-area">
+
+
+
             <button id="acceptBtn" onclick="handleAccept()">Accept Invitation</button>
+
+
+
             
+
+
+
             <div id="thanksMsg" class="hidden">
+
+
+
                 <h2 style="margin: 0; font-size: 1.8rem;">🎉 Thank you for accepting!</h2>
+
+
+
                 <p style="margin-top: 8px; font-size: 1.1rem;"> See you there ❤️</p>
+
+
+
             </div>
+
+
+
         </div>
+
+
+
     </div>
 
+
+
+
+
+
+
     <script>
+
+
+
         const cheerAudio = document.getElementById('cheerSound');
 
+
+
+
+
+
+
         function handleAccept() {
+
+
+
             cheerAudio.currentTime = 0;
+
+
+
             cheerAudio.play();
 
+
+
+
+
+
+
             const count = 500; 
+
+
+
             const defaults = {
+
+
+
                 origin: { y: 0.8 },
+
+
+
                 scalar: 1.3,
+
+
+
                 gravity: 1.1,
+
+
+
                 ticks: 400 
+
+
+
             };
 
+
+
+
+
+
+
             function fire(particleRatio, opts) {
+
+
+
                 confetti({
+
+
+
                     ...defaults,
+
+
+
                     ...opts,
+
+
+
                     particleCount: Math.floor(count * particleRatio)
+
+
+
                 });
+
+
+
             }
 
-            fire(0.25, {
-                spread: 70,
-                startVelocity: 55,
-                angle: 60,
-                origin: { x: 0, y: 0.9 },
-                colors: ['#b08d57', '#ffffff']
-            });
+
+
+
+
+
 
             fire(0.25, {
+
+
+
                 spread: 70,
+
+
+
                 startVelocity: 55,
-                angle: 120,
-                origin: { x: 1, y: 0.9 },
+
+
+
+                angle: 60,
+
+
+
+                origin: { x: 0, y: 0.9 },
+
+
+
                 colors: ['#b08d57', '#ffffff']
+
+
+
             });
+
+
+
+
+
+
+
+            fire(0.25, {
+
+
+
+                spread: 70,
+
+
+
+                startVelocity: 55,
+
+
+
+                angle: 120,
+
+
+
+                origin: { x: 1, y: 0.9 },
+
+
+
+                colors: ['#b08d57', '#ffffff']
+
+
+
+            });
+
+
+
+
+
+
 
             fire(0.5, {
+
+
+
                 spread: 120,
+
+
+
                 startVelocity: 45,
+
+
+
                 origin: { x: 0.5, y: 0.7 },
+
+
+
                 colors: ['#2d2d2d', '#f4c2c2', '#ffffff', '#b08d57']
+
+
+
             });
 
+
+
+
+
+
+
             const btn = document.getElementById('acceptBtn');
+
+
+
             const msg = document.getElementById('thanksMsg');
+
+
+
             btn.style.display = 'none';
+
+
+
             msg.classList.remove('hidden');
+
+
+
             setTimeout(() => msg.classList.add('reveal'), 50);
+
+
+
         }
+
+
+
     </script>
+
+
+
 </body>
+
+
+
 </html>
