@@ -17,13 +17,11 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            /* Prevents any scrolling and fixing the "jumping" refresh issue */
-            overflow: hidden; 
             display: flex;
             justify-content: center;
+            align-items: flex-start; 
+            min-height: 100vh;
+            overflow-x: hidden; 
         }
 
         .container {
@@ -33,10 +31,8 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            
-            /* Fixed positioning keeps the card locked in place */
-            position: fixed; 
-            top: 5vh; /* Sets card 5% from the top of the screen */
+            margin-top: 40px; 
+            position: relative;
             z-index: 2;
         }
 
@@ -50,10 +46,12 @@
         }
 
         .action-area {
-            margin-top: 30px;
+            margin-top: 35px;
             text-align: center;
+            padding-bottom: 50px; 
         }
 
+        /* --- UPDATED BUTTON STYLE FOR MOBILE FEEDBACK --- */
         button {
             background-color: transparent;
             color: var(--dark);
@@ -65,16 +63,28 @@
             border-radius: 0px; 
             cursor: pointer;
             letter-spacing: 2px;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             text-transform: uppercase;
             outline: none;
+            /* Faster transition for snappier feel */
+            transition: all 0.2s ease; 
+            /* Prevents the ugly blue highlight box on tap */
+            -webkit-tap-highlight-color: transparent; 
         }
 
+        /* Desktop Hover State */
         button:hover {
             transform: translateY(-3px);
             background-color: var(--dark);
             color: #fff;
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Mobile Click/Press Feedback */
+        button:active {
+            transform: scale(0.95); /* Button slightly shrinks when pressed */
+            background-color: var(--dark);
+            color: #fff;
+            transition: all 0.1s;
         }
 
         #thanksMsg {
@@ -108,7 +118,7 @@
             <button id="acceptBtn" onclick="handleAccept()">Accept Invitation</button>
             
             <div id="thanksMsg" class="hidden">
-                <p style="margin: 0; font-size: 1.8rem;">🎉 Thank you for accepting!</p>
+                <h2 style="margin: 0; font-size: 1.8rem;">🎉 Thank you for accepting!</h2>
                 <p style="margin-top: 8px; font-size: 1.1rem;"> See you there ❤️</p>
             </div>
         </div>
@@ -118,11 +128,9 @@
         const cheerAudio = document.getElementById('cheerSound');
 
         function handleAccept() {
-            // Sound play
             cheerAudio.currentTime = 0;
             cheerAudio.play();
 
-            // Single massive coordinated burst
             const count = 500; 
             const defaults = {
                 origin: { y: 0.8 },
@@ -139,7 +147,6 @@
                 });
             }
 
-            // Fire all at once
             fire(0.25, {
                 spread: 70,
                 startVelocity: 55,
@@ -163,7 +170,6 @@
                 colors: ['#2d2d2d', '#f4c2c2', '#ffffff', '#b08d57']
             });
 
-            // UI Reveal
             const btn = document.getElementById('acceptBtn');
             const msg = document.getElementById('thanksMsg');
             btn.style.display = 'none';
