@@ -1,677 +1,189 @@
 <!DOCTYPE html>
-
-
-
 <html lang="en">
-
-
-
 <head>
-
-
-
     <meta charset="UTF-8">
-
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nexus '26 | Farewell Invitation</title>
-
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-
-
     
-
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
-
-
-
         :root {
-
-
-
-            --bg: #fdfaf7; 
-
-
-
+            --bg: rgb(234, 215, 199);
             --dark: #2d2d2d;
-
-
-
+            --gold: #b08d57;
+            --white: #ffffff;
         }
 
-
-
-
-
-
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
-
-
-
             font-family: 'Inter', sans-serif;
-
-
-
             background-color: var(--bg);
-
-
-
             margin: 0;
-
-
-
             display: flex;
-
-
-
             justify-content: center;
-
-
-
-            /* CHANGED: flex-start pushes content to the top instead of the dead center */
-
-
-
             align-items: flex-start; 
-
-
-
-            min-height: 100vh;
-
-
-
-            overflow-x: hidden; 
-
-
-
+            height: 100vh;
+            width: 100vw;
+            padding-top: 25px; /* Reduced from 40px to move entire layout up */
+            overflow: hidden; 
+            position: fixed; 
         }
-
-
-
-
-
-
 
         .container {
-
-
-
             width: 90%;
-
-
-
             max-width: 420px; 
-
-
-
             display: flex;
-
-
-
             flex-direction: column;
-
-
-
             align-items: center;
-
-
-
-            padding: 20px;
-
-
-
-            /* ADDED: This margin creates a nice gap at the top of the phone screen */
-
-
-
-            margin-top: 40px; 
-
-
-
             position: relative;
-
-
-
             z-index: 2;
-
-
-
         }
-
-
-
-
-
-
 
         .invitation-pic {
-
-
-
             width: 100%;
-
-
-
             height: auto;
-
-
-
-            display: block;
-
-
-
             border-radius: 4px;
-
-
-
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-
-
-
             animation: zoomEntrance 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-
-
-
         }
-
-
-
-
-
-
 
         .action-area {
-
-
-
-            margin-top: 35px;
-
-
-
+            margin-top: 15px; /* Reduced to move the button much closer to the image */
             text-align: center;
-
-
-
-            /* ADDED: Ensures enough space at the bottom for scrolling */
-
-
-
-            padding-bottom: 50px; 
-
-
-
+            width: 100%;
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-
-
-
-
-
 
         button {
-
-
-
-            background-color: transparent;
-
-
-
-            color: var(--dark);
-
-
-
-            border: 2px solid var(--dark);
-
-
-
-            padding: 16px 40px;
-
-
-
-            font-family: 'Fira Code', monospace; 
-
-
-
-            font-size: 0.9rem;
-
-
-
-            font-weight: 500;
-
-
-
-            border-radius: 0px; 
-
-
-
-            cursor: pointer;
-
-
-
-            letter-spacing: 2px;
-
-
-
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-
-
-
-            text-transform: uppercase;
-
-
-
-        }
-
-
-
-
-
-
-
-        button:hover {
-
-
-
-            transform: translateY(-3px);
-
-
-
+            position: relative;
             background-color: var(--dark);
-
-
-
-            color: #fff;
-
-
-
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-
-
-
+            color: var(--white);
+            border: none;
+            padding: 14px 30px; /* Slimmer padding for a compact look */
+            font-family: 'Fira Code', monospace; 
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            width: auto; 
+            white-space: nowrap; 
+            outline: none;
         }
 
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s;
+        }
 
+        button:active {
+            transform: scale(0.96);
+            background-color: #1a1a1a;
+        }
 
+        button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--gold);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
 
-
-
+        button:hover::after { width: 70%; }
+        button:hover::before { left: 100%; }
 
         #thanksMsg {
-
-
-
             opacity: 0;
-
-
-
-            transform: translateY(15px);
-
-
-
+            transform: translateY(10px);
             transition: all 0.6s ease;
-
-
-
             color: var(--dark);
-
-
-
+            text-align: center;
         }
-
-
-
-
-
-
 
         #thanksMsg.reveal {
-
-
-
             opacity: 1;
-
-
-
             transform: translateY(0);
-
-
-
         }
-
-
-
-
-
-
 
         .hidden { display: none; }
 
-
-
-
-
-
-
         @keyframes zoomEntrance {
-
-
-
             from { opacity: 0; transform: scale(0.9) translateY(20px); }
-
-
-
             to { opacity: 1; transform: scale(1) translateY(0); }
-
-
-
         }
-
-
-
     </style>
-
-
-
 </head>
-
-
-
 <body>
-
-
-
-
-
-
 
     <audio id="cheerSound" src="cheers.mp3" preload="auto"></audio>
 
-
-
-
-
-
-
     <div class="container">
-
-
-
         <img src="pic.png" alt="Nexus '26 Invitation" class="invitation-pic">
 
-
-
-
-
-
-
         <div class="action-area">
-
-
-
             <button id="acceptBtn" onclick="handleAccept()">Accept Invitation</button>
-
-
-
             
-
-
-
             <div id="thanksMsg" class="hidden">
-
-
-
-                <h2 style="margin: 0; font-size: 1.8rem;">🎉 Thank you for accepting!</h2>
-
-
-
-                <p style="margin-top: 8px; font-size: 1.1rem;"> See you there ❤️</p>
-
-
-
+                <h2 style="margin: 0; font-size: 1.6rem;">🎉 Thank you for accepting!</h2>
+                <p style="margin-top: 6px; font-size: 1rem;"> See you there ❤️</p>
             </div>
-
-
-
         </div>
-
-
-
     </div>
 
-
-
-
-
-
-
     <script>
-
-
-
         const cheerAudio = document.getElementById('cheerSound');
-
-
-
-
-
-
+        const btn = document.getElementById('acceptBtn');
+        const msg = document.getElementById('thanksMsg');
 
         function handleAccept() {
-
-
-
             cheerAudio.currentTime = 0;
+            cheerAudio.play().catch(() => console.log("Audio play blocked"));
 
+            btn.style.opacity = '0';
+            btn.style.transform = 'scale(0.9) translateY(5px)';
+            btn.style.pointerEvents = 'none';
 
-
-            cheerAudio.play();
-
-
-
-
-
-
-
-            const count = 500; 
-
-
-
-            const defaults = {
-
-
-
-                origin: { y: 0.8 },
-
-
-
-                scalar: 1.3,
-
-
-
-                gravity: 1.1,
-
-
-
-                ticks: 400 
-
-
-
-            };
-
-
-
-
-
-
+            const count = 400;
+            const defaults = { origin: { y: 0.7 }, zIndex: 999 };
 
             function fire(particleRatio, opts) {
-
-
-
-                confetti({
-
-
-
-                    ...defaults,
-
-
-
-                    ...opts,
-
-
-
-                    particleCount: Math.floor(count * particleRatio)
-
-
-
-                });
-
-
-
+                confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
             }
 
-
-
-
-
-
-
-            fire(0.25, {
-
-
-
-                spread: 70,
-
-
-
-                startVelocity: 55,
-
-
-
-                angle: 60,
-
-
-
-                origin: { x: 0, y: 0.9 },
-
-
-
-                colors: ['#b08d57', '#ffffff']
-
-
-
-            });
-
-
-
-
-
-
-
-            fire(0.25, {
-
-
-
-                spread: 70,
-
-
-
-                startVelocity: 55,
-
-
-
-                angle: 120,
-
-
-
-                origin: { x: 1, y: 0.9 },
-
-
-
-                colors: ['#b08d57', '#ffffff']
-
-
-
-            });
-
-
-
-
-
-
-
-            fire(0.5, {
-
-
-
-                spread: 120,
-
-
-
-                startVelocity: 45,
-
-
-
-                origin: { x: 0.5, y: 0.7 },
-
-
-
-                colors: ['#2d2d2d', '#f4c2c2', '#ffffff', '#b08d57']
-
-
-
-            });
-
-
-
-
-
-
-
-            const btn = document.getElementById('acceptBtn');
-
-
-
-            const msg = document.getElementById('thanksMsg');
-
-
-
-            btn.style.display = 'none';
-
-
-
-            msg.classList.remove('hidden');
-
-
-
-            setTimeout(() => msg.classList.add('reveal'), 50);
-
-
-
+            fire(0.25, { spread: 60, startVelocity: 60, origin: { x: 0, y: 0.8 }, colors: ['#b08d57', '#ffffff'] });
+            fire(0.25, { spread: 60, startVelocity: 60, origin: { x: 1, y: 0.8 }, colors: ['#b08d57', '#ffffff'] });
+            fire(0.5, { spread: 100, startVelocity: 45, colors: ['#2d2d2d', '#b08d57', '#ffffff'] });
+
+            setTimeout(() => {
+                btn.classList.add('hidden');
+                msg.classList.remove('hidden');
+                msg.offsetHeight; 
+                msg.classList.add('reveal');
+            }, 400);
         }
-
-
-
     </script>
-
-
-
 </body>
-
-
-
 </html>
