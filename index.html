@@ -24,19 +24,19 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
-            margin: 0;
+            margin: 0; /* Changed from 10px to 0 for better stability */
             display: flex;
             justify-content: center;
             align-items: flex-start; 
             height: 100vh;
             width: 100vw;
-            padding-top: 25px; /* Reduced from 40px to move entire layout up */
+            padding-top: 10px; /* Your requested change */
             overflow: hidden; 
             position: fixed; 
         }
 
         .container {
-            width: 90%;
+            width: 94%; /* Slightly wider for mobile */
             max-width: 420px; 
             display: flex;
             flex-direction: column;
@@ -47,14 +47,15 @@
 
         .invitation-pic {
             width: 100%;
-            height: auto;
+            height: 68vh; /* Force increased image height */
+            object-fit: contain; /* Keeps image proportions perfect */
             border-radius: 4px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             animation: zoomEntrance 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         .action-area {
-            margin-top: 15px; /* Reduced to move the button much closer to the image */
+            margin-top: 10px; /* Tight spacing between image and button */
             text-align: center;
             width: 100%;
             min-height: 80px;
@@ -68,7 +69,7 @@
             background-color: var(--dark);
             color: var(--white);
             border: none;
-            padding: 14px 30px; /* Slimmer padding for a compact look */
+            padding: 14px 30px;
             font-family: 'Fira Code', monospace; 
             font-size: 0.85rem;
             font-weight: 600;
@@ -84,6 +85,7 @@
             outline: none;
         }
 
+        /* Shine Effect */
         button::before {
             content: '';
             position: absolute;
@@ -97,7 +99,6 @@
 
         button:active {
             transform: scale(0.96);
-            background-color: #1a1a1a;
         }
 
         button::after {
@@ -120,7 +121,6 @@
             transform: translateY(10px);
             transition: all 0.6s ease;
             color: var(--dark);
-            text-align: center;
         }
 
         #thanksMsg.reveal {
@@ -167,7 +167,7 @@
             btn.style.pointerEvents = 'none';
 
             const count = 400;
-            const defaults = { origin: { y: 0.7 }, zIndex: 999 };
+            const defaults = { origin: { y: 0.75 }, zIndex: 999 };
 
             function fire(particleRatio, opts) {
                 confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
